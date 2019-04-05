@@ -28,9 +28,14 @@ def perforce_discord_webhook
 
 	latestChange = p4.run_changes("-l", "-t", "-m", "1", "-s", "submitted", "//gamep_group06/...")
 	descriptionOfChange = p4.run_describe("-dn", latestChange.first['change'])
+
+	diffArray = nil
+	i = 0
+	descriptionOfChange.first['depotFile'].each {|file| i+=1 diffArray.push(p4.run_diff2(file+descriptionOfChange.first['depotFile'][i],file+(descriptionOfChange.first['depotFile'][i]+1))) }
 	
-	puts(latestChange)
+	# puts(latestChange) shorter description
 	puts(descriptionOfChange)
+	puts(diffArray)
 	
 	client = Discordrb::Webhooks::Client.new(url: ENV['WEBHOOK'])
 	
