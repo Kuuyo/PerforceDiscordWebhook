@@ -1,12 +1,6 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (5.2.3)
-      concurrent-ruby (~> 1.0, >= 1.0.2)
-      i18n (>= 0.7, < 2)
-      minitest (~> 5.1)
-      tzinfo (~> 1.1)
-    concurrent-ruby (1.1.5)
     discordrb (3.3.0)
       discordrb-webhooks (~> 3.3.0)
       ffi (>= 1.9.24)
@@ -18,18 +12,14 @@ GEM
       rest-client (>= 2.1.0.rc1)
     domain_name (0.5.20180417)
       unf (>= 0.0.5, < 1.0.0)
-    dotenv (2.7.2)
     event_emitter (0.2.6)
     ffi (1.10.0-x86-mingw32)
     http-accept (1.7.0)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
-    i18n (1.6.0)
-      concurrent-ruby (~> 1.0)
     mime-types (3.2.2)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2019.0331)
-    minitest (5.11.3)
     netrc (0.11.0)
     opus-ruby (1.0.1)
       ffi
@@ -42,10 +32,7 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
-    thread_safe (0.3.6)
     timeloop (2.0.0)
-    tzinfo (1.2.5)
-      thread_safe (~> 0.1)
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.5-x86-mingw32)
@@ -58,14 +45,9 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
-  activesupport
-  discordrb (~> 3.2, >= 3.2.1)
-  dotenv
+  discordrb
   p4ruby (~> 2017.1)
   timeloop
-
-RUBY VERSION
-   ruby 2.3.3p222
 
 BUNDLED WITH
    2.0.1
