@@ -41,15 +41,15 @@ def perforce_discord_webhook
 				user = latestChange.first['user']
 					case user
 						when ENV['USER1']
-							icon = ENV['JLICON']
+							icon = ENV['U1ICON']
 						when ENV['USER2']
-							icon = ENV['ZLICON']
+							icon = ENV['U2ICON']
 						when ENV['USER3']
-							icon = ENV['EAICON']
+							icon = ENV['U3ICON']
 						when ENV['USER4']
-							icon = ENV['RVICON']
+							icon = ENV['U4ICON']
 						when ENV['USER5']
-							icon = ENV['EHICON']
+							icon = ENV['U5ICON']
 						else
 							icon = 'https://cdn.discordapp.com/embed/avatars/0.png'
 					end
