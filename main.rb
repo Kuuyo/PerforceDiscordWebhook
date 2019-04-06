@@ -86,7 +86,7 @@ def perforce_discord_webhook
 				#embed.add_field(name: 'Files:', value: '')
 				fileArray.each {|file| embed.add_field(
 				name: descriptionOfChange.first['action'].shift + ' ' + descriptionOfChange.first['type'].shift,
-				value: file}
+				value: file)}
 			end
 		end
 		$previousChange = latestChange
