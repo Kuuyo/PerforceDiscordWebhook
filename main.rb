@@ -20,7 +20,7 @@ def decrement_file_revision(file)
 	index = file.rindex('#')
 	puts('Index:')
 	puts(index)
-	rev = file[index..-1]
+	rev = file[index+1..-1]
 	puts('FileRev:')
 	puts(rev)
 	rev = rev-1
