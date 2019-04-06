@@ -40,13 +40,12 @@ def perforce_discord_webhook
 	p4.run_login
 
 	latestChange = p4.run_changes("-l", "-t", "-m", "1", "-s", "submitted", ENV['P4PATH'])
-	
-	puts(descriptionOfChange)
-	
+		
 	client = Discordrb::Webhooks::Client.new(url: ENV['WEBHOOK'])
 	
 	if latestChange != $previousChange
 		descriptionOfChange = p4.run_describe(latestChange.first['change'])
+		puts(descriptionOfChange)
 
 		fileArray = nil
 		descriptionOfChange.first['depotFile'].each {|file| fileArray.push(file+descriptionOfChange.first['rev'].shift)}
@@ -55,7 +54,6 @@ def perforce_discord_webhook
 		fileArray2 = fileArray
 		fileArray2.each {|file| decrement_file_revision(file)}
 		puts(fileArray2)
-
 
 		client.execute do |builder|
 			builder.content = 'Perforce change ' + latestChange.first['change']
