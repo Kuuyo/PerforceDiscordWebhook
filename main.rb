@@ -48,7 +48,7 @@ def perforce_discord_webhook
 		puts(descriptionOfChange)
 
 		fileArray = []
-		descriptionOfChange.first['depotFile'].each {|file| fileArray.push(file+descriptionOfChange.first['rev'].shift)}
+		descriptionOfChange.first['depotFile'].each {|file| fileArray.push(file+'#'+descriptionOfChange.first['rev'].shift)}
 		puts(fileArray)
 
 		fileArray2 = fileArray
