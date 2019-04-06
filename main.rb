@@ -55,6 +55,10 @@ def perforce_discord_webhook
 		fileArray2.map! {|file| decrement_file_revision(file)}
 		puts(fileArray2)
 
+		diffArray = []
+		fileArray.each_with_index{|file, index| diffArray.push(p4.run_diff2(file,fileArray2[index]))}
+		puts(diffArray)
+
 		client.execute do |builder|
 			builder.content = 'Perforce change ' + latestChange.first['change']
 			builder.add_embed do |embed|
