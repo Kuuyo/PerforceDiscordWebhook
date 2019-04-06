@@ -18,20 +18,10 @@ end
 
 def decrement_file_revision(file)
 	index = file.rindex('#')
-	puts('Index:')
-	puts(index)
 	rev = file[index+1..-1]
-	puts('FileRev:')
-	puts(rev)
 	rev = rev.to_i-1
-	puts('DecrementedRev:')
-	puts(rev)
 	file = file[0..index]
-	puts('StrippedFile:')
-	puts(file)
 	file = file + rev.to_s
-	puts('DecrementedFile:')
-	puts(file)
 end
 
 def perforce_discord_webhook
@@ -58,9 +48,7 @@ def perforce_discord_webhook
 		puts(fileArray)
 
 		fileArray2 = fileArray
-		for file in fileArray2 do
-			decrement_file_revision(file)
-		end
+		fileArray2.map! {|file| decrement_file_revision(file)}
 		puts(fileArray2)
 
 		client.execute do |builder|
