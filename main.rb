@@ -57,7 +57,8 @@ def perforce_discord_webhook
 
 		diffArray = []
 		fileArray.each_with_index{|file, index| diffArray.push(p4.run_diff2("-ds",file,fileArray2[index]))}
-		puts(diffArray)
+		diffArray.each{|x| puts(x)}
+		diffArray.each{|x| x.each{|y| puts(y)}}
 
 		client.execute do |builder|
 			builder.content = 'Perforce change ' + latestChange.first['change']
