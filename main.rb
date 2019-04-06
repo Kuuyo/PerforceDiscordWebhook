@@ -20,13 +20,13 @@ def decrement_file_revision(file)
 	index = file.rindex('#')
 	puts('Index:')
 	puts(index)
-	rev = file[index,-1]
+	rev = file[index..-1]
 	puts('FileRev:')
 	puts(rev)
 	rev = rev-1
 	puts('DecrementedRev:')
 	puts(rev)
-	file = file[0,index]
+	file = file[0..index]
 	puts('StrippedFile:')
 	puts(file)
 	file = file + rev
