@@ -58,7 +58,9 @@ def perforce_discord_webhook
 		puts(fileArray)
 
 		fileArray2 = fileArray
-		fileArray2.each {|file| decrement_file_revision(file)}
+		for file in fileArray2 do
+			decrement_file_revision(file)
+		end
 		puts(fileArray2)
 
 		client.execute do |builder|
