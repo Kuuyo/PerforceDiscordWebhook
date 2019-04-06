@@ -56,7 +56,7 @@ def perforce_discord_webhook
 		puts(fileArray2)
 
 		diffArray = []
-		fileArray.each_with_index{|file, index| diffArray.push(p4.run_diff2(file,fileArray2[index]))}
+		fileArray.each_with_index{|file, index| diffArray.push(p4.run_diff2("-ds",file,fileArray2[index]))}
 		puts(diffArray)
 
 		client.execute do |builder|
@@ -83,9 +83,7 @@ def perforce_discord_webhook
 				embed.description = latestChange.first['path']
 				embed.timestamp = Time.now
 				embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: 'Helix Core', icon_url: 'https://i.imgur.com/qixMjRV.png')
-				#embed.image = Discordrb::Webhooks::EmbedImage.new(url: '')
-				embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: 'https://i.imgur.com/qixMjRV.png')
-				#embed.add_field(name: 'Files:', value: '')
+				embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: ENV['EMBEDTHUMB'])
 				fileArray.each {|file| embed.add_field(
 				name: descriptionOfChange.first['action'].shift + ' ' + descriptionOfChange.first['type'].shift,
 				value: file)}
