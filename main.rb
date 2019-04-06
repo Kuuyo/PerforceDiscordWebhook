@@ -4,6 +4,7 @@ require 'P4'
 
 $previousChange = nil
 
+#https://stackoverflow.com/questions/13791964/how-do-i-make-a-ruby-script-run-once-a-second
 def secondly_loop
     last = Time.now
     while true
@@ -13,6 +14,18 @@ def secondly_loop
         sleep (_next-now)
         last = _next
     end
+end
+
+def decrement_file_revision(file)
+	index = file.rindex('#')
+	rev = file[index,-1]
+	puts(rev)
+	rev = rev-1
+	puts(rev)
+	file = file[0,index]
+	puts(file)
+	file = file + rev
+	puts(file)
 end
 
 def perforce_discord_webhook
@@ -26,20 +39,24 @@ def perforce_discord_webhook
 	p4.connect
 	p4.run_login
 
-	latestChange = p4.run_changes("-l", "-t", "-m", "1", "-s", "submitted", "//gamep_group06/...")
-	descriptionOfChange = p4.run_describe("-dn", latestChange.first['change'])
-
-	diffArray = nil
-	#i = 0
-	#descriptionOfChange.first['depotFile'].each {|file| i+=1 diffArray.push(p4.run_diff2(file+descriptionOfChange.first['depotFile'][i],file+(descriptionOfChange.first['depotFile'][i]+1))) }
+	latestChange = p4.run_changes("-l", "-t", "-m", "1", "-s", "submitted", ENV['P4PATH'])
 	
-	# puts(latestChange) shorter description
 	puts(descriptionOfChange)
-	#puts(diffArray)
 	
 	client = Discordrb::Webhooks::Client.new(url: ENV['WEBHOOK'])
 	
 	if latestChange != $previousChange
+		descriptionOfChange = p4.run_describe(latestChange.first['change'])
+
+		fileArray = nil
+		descriptionOfChange.first['depotFile'].each {|file| fileArray.push(file+descriptionOfChange.first['rev'].shift}
+		puts(fileArray)
+
+		fileArray2 = fileArray
+		fileArray2.each {|file| decrement_file_revision(file)}
+		puts(fileArray2)
+
+
 		client.execute do |builder|
 			builder.content = 'Perforce change ' + latestChange.first['change']
 			builder.add_embed do |embed|
@@ -67,9 +84,9 @@ def perforce_discord_webhook
 				#embed.image = Discordrb::Webhooks::EmbedImage.new(url: '')
 				embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: 'https://i.imgur.com/qixMjRV.png')
 				#embed.add_field(name: 'Files:', value: '')
-				descriptionOfChange.first['depotFile'].each {|file| embed.add_field(
+				fileArray.each {|file| embed.add_field(
 				name: descriptionOfChange.first['action'].shift + ' ' + descriptionOfChange.first['type'].shift,
-				value: file + ' Rev: #' + descriptionOfChange.first['rev'].shift)}
+				value: file}
 			end
 		end
 		$previousChange = latestChange
