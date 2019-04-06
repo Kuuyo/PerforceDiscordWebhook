@@ -29,7 +29,7 @@ def decrement_file_revision(file)
 	file = file[0..index]
 	puts('StrippedFile:')
 	puts(file)
-	file = file + rev
+	file = file + rev.to_s
 	puts('DecrementedFile:')
 	puts(file)
 end
