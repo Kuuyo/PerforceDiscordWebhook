@@ -19,9 +19,12 @@ end
 def decrement_file_revision(file)
 	index = file.rindex('#')
 	rev = file[index+1..-1]
-	rev = rev.to_i-1
-	file = file[0..index]
-	file = file + rev.to_s
+	rev = rev.to_i
+	if rev > 1
+		rev = rev -1
+		file = file[0..index]
+		file = file + rev.to_s
+	end
 end
 
 def perforce_discord_webhook
@@ -47,7 +50,8 @@ def perforce_discord_webhook
 		descriptionOfChange.first['depotFile'].each {|file| fileArray.push(file+'#'+descriptionOfChange.first['rev'].shift)}
 		puts(fileArray)
 
-		fileArray2 = fileArray
+		fileArray2 = []
+		fileArray.each{|file| fileArray2 << file.dup}
 		fileArray2.map! {|file| decrement_file_revision(file)}
 		puts(fileArray2)
 
