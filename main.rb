@@ -47,7 +47,7 @@ def perforce_discord_webhook
 		descriptionOfChange = p4.run_describe(latestChange.first['change'])
 		puts(descriptionOfChange)
 
-		fileArray = nil
+		fileArray = []
 		descriptionOfChange.first['depotFile'].each {|file| fileArray.push(file+descriptionOfChange.first['rev'].shift)}
 		puts(fileArray)
 
