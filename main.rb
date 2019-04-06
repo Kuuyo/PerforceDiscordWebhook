@@ -23,7 +23,7 @@ def decrement_file_revision(file)
 	rev = file[index+1..-1]
 	puts('FileRev:')
 	puts(rev)
-	rev = rev-1
+	rev = rev.to_i-1
 	puts('DecrementedRev:')
 	puts(rev)
 	file = file[0..index]
